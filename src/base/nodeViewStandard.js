@@ -21,19 +21,19 @@ import NodeView from './nodeView';
 import NodeNameView from './nodeNameView';
 import GlobalStyles from '../globalStyles';
 
-const radius = 16;
+const DEFAULT_RADIUS = 16;
 
 class NodeViewStandard extends NodeView {
   constructor (service) {
     super(service);
-    this.radius = radius;
+    this.radius = this.object.radius || DEFAULT_RADIUS;
 
     this.dotColor = GlobalStyles.getColorTrafficRGBA(this.object.getClass());
     this.dotMaterial = new THREE.MeshBasicMaterial({ color: new THREE.Color(this.dotColor.r, this.dotColor.g, this.dotColor.b), transparent: true, opacity: this.dotColor.a });
 
-    this.meshes.outerBorder = this.addChildElement(NodeView.getOuterBorderGeometry(radius), this.borderMaterial);
-    this.meshes.innerCircle = this.addChildElement(NodeView.getInnerCircleGeometry(radius), this.innerCircleMaterial);
-    this.meshes.noticeDot = this.addChildElement(NodeView.getNoticeDotGeometry(radius), this.dotMaterial);
+    this.meshes.outerBorder = this.addChildElement(NodeView.getOuterBorderGeometry(this.radius), this.borderMaterial);
+    this.meshes.innerCircle = this.addChildElement(NodeView.getInnerCircleGeometry(this.radius), this.innerCircleMaterial);
+    this.meshes.noticeDot = this.addChildElement(NodeView.getNoticeDotGeometry(this.radius), this.dotMaterial);
     this.refreshNotices();
 
     // Add the service name
